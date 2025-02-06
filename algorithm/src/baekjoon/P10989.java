@@ -5,11 +5,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
-public class P2751 {
+public class P10989 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -17,16 +14,16 @@ public class P2751 {
 
 		int n = Integer.parseInt(br.readLine());
 
-		List<Integer> nums = new ArrayList<>();
+		int[] number = new int[10001];
 
 		for (int i = 0; i < n; i++) {
-			nums.add(Integer.parseInt(br.readLine()));
+			number[Integer.parseInt(br.readLine())]++;
 		}
 
-		Collections.sort(nums);
-
-		for (int i = 0; i < n; i++) {
-			sb.append(nums.get(i)).append("\n");
+		for (int i = 1; i <= 10000; i++) {
+			for (int j = 0; j < number[i]; j++) {
+				sb.append(i).append("\n");
+			}
 		}
 
 		bw.append(sb.toString());

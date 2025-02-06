@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class P2751 {
+public class P2108 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -17,18 +17,20 @@ public class P2751 {
 
 		int n = Integer.parseInt(br.readLine());
 
+		int sum = 0;
+
 		List<Integer> nums = new ArrayList<>();
 
 		for (int i = 0; i < n; i++) {
-			nums.add(Integer.parseInt(br.readLine()));
+			int num = Integer.parseInt(br.readLine());
+			nums.add(num);
+			sum += num;
 		}
 
 		Collections.sort(nums);
 
-		for (int i = 0; i < n; i++) {
-			sb.append(nums.get(i)).append("\n");
-		}
-
+		sb.append(sum / n).append("\n").append(nums.get(n / 2)).append("\n").append(nums.get(n - 1) - nums.get(0))
+				.append("\n").append(nums.get(n - 1) - nums.get(0));
 		bw.append(sb.toString());
 		bw.flush();
 		br.close();
