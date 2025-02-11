@@ -28,19 +28,34 @@ public class P3273 {
 		Arrays.sort(num);
 
 		int cnt = 0;
-		for (int i = 0; i < n - 1; i++) {
-			for (int j = i + 1; j < n; j++) {
-				if (num[i] + num[j] == x) {
-					cnt++;
-					break;
-				} else if (num[i] + num[j] > x) {
-					break;
-				}
+
+//		for (int i = 0; i < n - 1; i++) {
+//			for (int j = i + 1; j < n; j++) {
+//				if (num[i] + num[j] == x) {
+//					cnt++;
+//					break;
+//				} else if (num[i] + num[j] > x) {
+//					break;
+//				}
+//			}
+//		}
+
+		int front = 0, back = n - 1;
+		while (front < back) {
+			if (num[front] + num[back] == x) {
+				cnt++;
+				front++;
+				back--;
+			} else if (num[front] + num[back] < x) {
+				front++;
+			} else {
+				back--;
 			}
 		}
 
 		bw.write(Integer.toString(cnt));
 
+		br.close();
 		bw.flush();
 		bw.close();
 	}

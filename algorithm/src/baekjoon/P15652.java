@@ -7,20 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
-public class P11050 {
-	public static int factorial(int n) {
-//		if (n == 0) { // StackOverflow
-//			return 0;
-//		}
-//		return n * factorial(n - 1);
-
-		int fact = 1;
-		for (int i = 1; i <= n; i++) {
-			fact *= i;
-		}
-		return fact;
-	}
-
+public class P15652 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -29,11 +16,9 @@ public class P11050 {
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
 		int n = Integer.parseInt(st.nextToken());
-		int k = Integer.parseInt(st.nextToken());
-
-		int num = factorial(n) / (factorial(n - k) * factorial(k));
-
-		sb.append(num);
+		int m = Integer.parseInt(st.nextToken());
+		
+		// 백트레킹
 
 		bw.write(sb.toString());
 		bw.flush();

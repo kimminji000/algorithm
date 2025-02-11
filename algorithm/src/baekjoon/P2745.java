@@ -7,20 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
-public class P11050 {
-	public static int factorial(int n) {
-//		if (n == 0) { // StackOverflow
-//			return 0;
-//		}
-//		return n * factorial(n - 1);
-
-		int fact = 1;
-		for (int i = 1; i <= n; i++) {
-			fact *= i;
-		}
-		return fact;
-	}
-
+public class P2745 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -28,12 +15,23 @@ public class P11050 {
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
-		int n = Integer.parseInt(st.nextToken());
-		int k = Integer.parseInt(st.nextToken());
+		String n = st.nextToken();
+		int b = Integer.parseInt(st.nextToken());
 
-		int num = factorial(n) / (factorial(n - k) * factorial(k));
+		int decimal = 0;
 
-		sb.append(num);
+		for (int i = 0; i < n.length(); i++) {
+			char alpha = n.charAt(i);
+			int num = 0;
+			if (alpha >= 'A' && alpha <= 'Z') {
+				num = alpha - 'A' + 10;
+			} else {
+				num = alpha - '0';
+			}
+			decimal += num * Math.pow(b, n.length() - 1 - i);
+		}
+
+		sb.append(decimal);
 
 		bw.write(sb.toString());
 		bw.flush();

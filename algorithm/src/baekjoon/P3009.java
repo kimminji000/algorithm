@@ -7,33 +7,37 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
-public class P11050 {
-	public static int factorial(int n) {
-//		if (n == 0) { // StackOverflow
-//			return 0;
-//		}
-//		return n * factorial(n - 1);
-
-		int fact = 1;
-		for (int i = 1; i <= n; i++) {
-			fact *= i;
-		}
-		return fact;
-	}
-
+public class P3009 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringBuilder sb = new StringBuilder();
 
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		int[] x = new int[3];
+		int[] y = new int[3];
 
-		int n = Integer.parseInt(st.nextToken());
-		int k = Integer.parseInt(st.nextToken());
+		for (int i = 0; i < 3; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
 
-		int num = factorial(n) / (factorial(n - k) * factorial(k));
+			x[i] = Integer.parseInt(st.nextToken());
+			y[i] = Integer.parseInt(st.nextToken());
+		}
 
-		sb.append(num);
+		if (x[0] == x[1]) {
+			sb.append(x[2]).append(" ");
+		} else if (x[0] == x[2]) {
+			sb.append(x[1]).append(" ");
+		} else {
+			sb.append(x[0]).append(" ");
+		}
+
+		if (y[0] == y[1]) {
+			sb.append(y[2]);
+		} else if (y[0] == y[2]) {
+			sb.append(y[1]);
+		} else {
+			sb.append(y[0]);
+		}
 
 		bw.write(sb.toString());
 		bw.flush();
