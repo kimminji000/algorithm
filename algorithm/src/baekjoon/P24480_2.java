@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
-public class P24479_2 {
-	public static ArrayList<Integer>[] graph;
-	public static int[] visited;
-	public static int cnt = 1;
+public class P24480_2 {
+	static ArrayList<Integer>[] graph;
+	static int[] visited;
+	static int cnt = 1;
 
 	public static void dfs(int x) {
 		if (visited[x] != 0) {
@@ -20,6 +20,7 @@ public class P24479_2 {
 		}
 
 		visited[x] = cnt++;
+
 		for (int i = 0; i < graph[x].size(); i++) {
 			if (visited[graph[x].get(i)] == 0) {
 				dfs(graph[x].get(i));
@@ -57,6 +58,7 @@ public class P24479_2 {
 
 		for (int i = 1; i <= n; i++) {
 			Collections.sort(graph[i]);
+			Collections.reverse(graph[i]);
 		}
 
 		dfs(r);

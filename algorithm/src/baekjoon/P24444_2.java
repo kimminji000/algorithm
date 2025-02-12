@@ -7,23 +7,30 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class P24479_2 {
-	public static ArrayList<Integer>[] graph;
-	public static int[] visited;
-	public static int cnt = 1;
+public class P24444_2 {
+	static ArrayList<Integer>[] graph;
+	static int[] visited;
+	static int cnt = 1;
 
-	public static void dfs(int x) {
-		if (visited[x] != 0) {
-			return;
-		}
-
+	static void bfs(int x) {
+		Queue<Integer> queue = new LinkedList<Integer>();
+		queue.add(x);
 		visited[x] = cnt++;
-		for (int i = 0; i < graph[x].size(); i++) {
-			if (visited[graph[x].get(i)] == 0) {
-				dfs(graph[x].get(i));
+
+		while (!queue.isEmpty()) {
+			int now = queue.poll();
+
+			for (int i : graph[now]) {
+				if (visited[i] == 0) {
+					queue.add(i);
+					visited[i] = cnt++;
+				}
 			}
+
 		}
 	}
 
@@ -59,7 +66,7 @@ public class P24479_2 {
 			Collections.sort(graph[i]);
 		}
 
-		dfs(r);
+		bfs(r);
 
 		for (int i = 1; i <= n; i++) {
 			sb.append(visited[i]).append("\n");

@@ -7,11 +7,11 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
-//반례 
-//1232220
-//1232110
-//123221110
-//123221111111110
+//반례 이전 코드 백준 참고
+//1 2 3 2 2 2 0
+//1 2 3 2 1 1 0
+//1 2 3 2 2 1 1 1 0
+//1 2 3 2 2 1 1 1 1 1 1 1 1 1 0
 public class P2342 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
