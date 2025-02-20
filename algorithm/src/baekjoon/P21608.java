@@ -8,13 +8,12 @@ import java.util.StringTokenizer;
 public class P21608 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
 		StringTokenizer st;
 
 		int n = Integer.parseInt(br.readLine());
 
-		int[][] seats = new int[n][n];
-		int[][] student = new int[n * n + 1][4];
+		int[][] seats = new int[n][n]; // 자리
+		int[][] student = new int[n * n + 1][4]; // 좋아하는 학생
 
 		int[] dx = new int[] { -1, 1, 0, 0 };
 		int[] dy = new int[] { 0, 0, -1, 1 };
@@ -28,13 +27,13 @@ public class P21608 {
 				student[num][j] = Integer.parseInt(st.nextToken()); // 좋아하는 학생들
 			}
 
-			int bestX = 0; // 최적 x 좌표
-			int bestY = 0; // 최적 y 좌표
+			int bestX = n - 1; // 최적 x 좌표
+			int bestY = n - 1; // 최적 y 좌표
 			int bestLike = 0; // 최적자리 인접한 칸에 좋아하는 학생 수
-			int bestBlank = 0;// 최적자리 인접한 칸에 빈자리 수
+			int bestBlank = 0; // 최적자리 인접한 칸에 빈자리 수
 
-			for (int x = 0; x < n; x++) { // 모든 칸 돌기
-				for (int y = 0; y < n; y++) {
+			for (int x = n - 1; x >= 0; x--) { // 모든 칸 돌기
+				for (int y = n - 1; y >= 0; y--) {
 					if (seats[x][y] == 0) { // 빈칸만 확인
 						int like = 0; // 인접한 칸에 좋아하는 학생 수
 						int blank = 0; // 인접한 칸에 빈칸 수
@@ -56,10 +55,12 @@ public class P21608 {
 							}
 						}
 
-						// 인접한 칸에 좋아하는 학생이 더 많거나 같다면 빈칸이 많을때 갱신
-						if (like > bestLike || (like == bestLike && blank > bestBlank)) {
+						// 인접한 칸에 좋아하는 학생이 더 많을때, 같다면 빈칸이 많거나 같을때 갱신
+						if (like > bestLike || (like == bestLike && blank >= bestBlank)) {
 							bestX = x;
 							bestY = y;
+							bestLike = like;
+							bestBlank = blank;
 						}
 					}
 				}
@@ -85,16 +86,16 @@ public class P21608 {
 							}
 						}
 					}
+				}
 
-					if (like == 1) {
-						sum += 1;
-					} else if (like == 2) {
-						sum += 10;
-					} else if (like == 3) {
-						sum += 100;
-					} else if (like == 4) {
-						sum += 1000;
-					}
+				if (like == 1) {
+					sum += 1;
+				} else if (like == 2) {
+					sum += 10;
+				} else if (like == 3) {
+					sum += 100;
+				} else if (like == 4) {
+					sum += 1000;
 				}
 			}
 		}
