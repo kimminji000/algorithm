@@ -27,14 +27,14 @@ public class P1463 {
 			}
 
 			if (num % 3 == 0) {
-				queue.add(new int[] { n / 3, cnt + 1 });
+				queue.add(new int[] { num / 3, cnt + 1 });
 			}
 
 			if (num % 2 == 0) {
-				queue.add(new int[] { n / 2, cnt + 1 });
+				queue.add(new int[] { num / 2, cnt + 1 });
 			}
 
-			queue.add(new int[] { n - 1, cnt + 1 });
+			queue.add(new int[] { num - 1, cnt + 1 });
 		}
 
 		return cnt;
