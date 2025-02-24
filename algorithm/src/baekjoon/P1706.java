@@ -18,40 +18,35 @@ public class P1706 {
 		int r = Integer.parseInt(st.nextToken());
 		int c = Integer.parseInt(st.nextToken());
 
-		List<ArrayList<Character>> puzzle = new ArrayList<ArrayList<Character>>();
-
-		for (int i = 0; i < r; i++) {
-			puzzle.add(new ArrayList<Character>());
-		}
+		char[][] puzzle = new char[r][c];
 
 		for (int i = 0; i < r; i++) {
 			String str = br.readLine();
 
 			for (int j = 0; j < c; j++) {
-				puzzle.get(i).add(str.charAt(j));
+				puzzle[i][j] = str.charAt(j);
 			}
 		}
 
 		List<String> words = new ArrayList<>();
+
 		for (int i = 0; i < r; i++) {
 			StringBuilder sb = new StringBuilder();
 
 			for (int j = 0; j < c; j++) {
-				char k = puzzle.get(i).get(j);
-				if (k != '#') {
-
-					sb.append(puzzle.get(i).get(j));
-				} else {
-
-					String str = sb.toString();
-					if (str.length() != 1)
+				if (puzzle[i][j] == '#') {
+					if (sb.toString().length() > 1) {
 						words.add(sb.toString());
-				}
-				if (j == c - 1) {
+					}
 
-					words.add(sb.toString());
+					sb = new StringBuilder();
+				} else {
+					sb.append(puzzle[i][j]);
 				}
+			}
 
+			if (sb.toString().length() > 1) {
+				words.add(sb.toString());
 			}
 		}
 
@@ -59,20 +54,19 @@ public class P1706 {
 			StringBuilder sb = new StringBuilder();
 
 			for (int i = 0; i < r; i++) {
-				char k = puzzle.get(i).get(j);
-				if (k != '#') {
-					sb.append(puzzle.get(i).get(j));
-				} else {
-					String str = sb.toString();
-					if (str.length() != 1)
+				if (puzzle[i][j] == '#') {
+					if (sb.toString().length() > 1) {
 						words.add(sb.toString());
-				}
-				if (j == c - 1) {
-					String str = sb.toString();
-					if (str.length() != 1)
-						words.add(sb.toString());
-				}
+					}
 
+					sb = new StringBuilder();
+				} else {
+					sb.append(puzzle[i][j]);
+				}
+			}
+
+			if (sb.toString().length() > 1) {
+				words.add(sb.toString());
 			}
 		}
 
