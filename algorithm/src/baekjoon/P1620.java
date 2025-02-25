@@ -3,6 +3,8 @@ package baekjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class P1620 {
@@ -14,23 +16,22 @@ public class P1620 {
 		int n = Integer.parseInt(st.nextToken());
 		int m = Integer.parseInt(st.nextToken());
 
-		String[] pokemon = new String[n + 1];
+		HashMap<Integer, String> pokemonNum = new HashMap<>();
+		HashMap<String, Integer> pokemonName = new HashMap<>();
 
 		for (int i = 1; i <= n; i++) {
-			pokemon[i] = br.readLine();
+			String name = br.readLine();
+			pokemonNum.put(i, name);
+			pokemonName.put(name, i);
 		}
 
 		for (int i = 0; i < m; i++) {
 			String str = br.readLine();
 
 			if (str.charAt(0) >= '1' && str.charAt(0) <= '9') {
-				System.out.println(pokemon[Integer.parseInt(str)]);
+				System.out.println(pokemonNum.get(Integer.parseInt(str)));
 			} else {
-				for (int j = 1; j <= n; j++) {
-					if (pokemon[j].equals(str)) {
-						System.out.println(j);
-					}
-				}
+				System.out.println(pokemonName.get(str));
 			}
 		}
 
