@@ -3,24 +3,28 @@ package swea;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
-public class P5215 {
-	static List<ArrayList<Integer>> combs;
-	static ArrayList<Integer> comb;
+public class P5215_combination2 {
+	static int l;
+	static int bestScore;
+	static int[] score;
+	static int[] k;
 
-	static void combination(int depth, int start, int n, int r) {
+	static void combination(int depth, int start, int n, int r, int scoreSum, int kSum) {
+		if (kSum > l) {
+			return;
+		}
+
 		if (depth == r) {
-			combs.add(new ArrayList<>(comb));
+			if (kSum <= l) {
+				bestScore = Math.max(scoreSum, bestScore);
+			}
 			return;
 		}
 
 		for (int i = start; i < n; i++) {
-			comb.add(i);
-			combination(depth + 1, i + 1, n, r);
-			comb.remove(comb.size() - 1);
+			combination(depth + 1, i + 1, n, r, scoreSum + score[i], kSum + k[i]);
 		}
 	}
 
@@ -35,10 +39,10 @@ public class P5215 {
 			st = new StringTokenizer(br.readLine());
 
 			int n = Integer.parseInt(st.nextToken());
-			int l = Integer.parseInt(st.nextToken());
+			l = Integer.parseInt(st.nextToken());
 
-			int[] score = new int[n];
-			int[] k = new int[n];
+			score = new int[n];
+			k = new int[n];
 
 			for (int i = 0; i < n; i++) {
 				st = new StringTokenizer(br.readLine());
@@ -47,34 +51,17 @@ public class P5215 {
 				k[i] = Integer.parseInt(st.nextToken());
 			}
 
-			combs = new ArrayList<>();
-			comb = new ArrayList<>();
+			bestScore = 0;
+
 			for (int i = 1; i <= n; i++) {
-				combination(0, 0, n, i);
-			}
-
-			int scoreSum, kSum, bestScore = 0;
-			for (ArrayList<Integer> i : combs) {
-				scoreSum = 0;
-				kSum = 0;
-
-				for (int j = 0; j < i.size(); j++) {
-					kSum += k[i.get(j)];
-
-					if (kSum > l) {
-						break;
-					}
-
-					scoreSum += score[i.get(j)];
-				}
-
-				bestScore = scoreSum > bestScore ? scoreSum : bestScore;
+				combination(0, 0, n, i, 0, 0);
 			}
 
 			sb.append("#").append(tc).append(" ").append(bestScore).append("\n");
 		}
 
 		System.out.println(sb.toString());
+
 		br.close();
 	}
 }
