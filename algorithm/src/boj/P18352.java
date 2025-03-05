@@ -57,7 +57,7 @@ public class P18352 {
 		graph = new ArrayList[n + 1];
 
 		for (int i = 1; i <= n; i++) {
-			graph[i] = new ArrayList();
+			graph[i] = new ArrayList<>();
 		}
 
 		for (int i = 0; i < m; i++) {

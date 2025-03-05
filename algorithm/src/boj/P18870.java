@@ -1,49 +1,68 @@
 package boj;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.StringTokenizer;
 
 public class P18870 {
+	static class Num {
+		int value;
+		int index;
+		int compress;
+
+		public Num(int value, int index) {
+			this.value = value;
+			this.index = index;
+		}
+	}
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringBuilder sb = new StringBuilder();
 
 		int n = Integer.parseInt(br.readLine());
-		int[] xArr = new int[n];
-		int[] num = new int[n];
+		Num[] num = new Num[n];
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
 		for (int i = 0; i < n; i++) {
-			xArr[i] = Integer.parseInt(st.nextToken());
-			num[i] = xArr[i];
+			num[i] = new Num(Integer.parseInt(st.nextToken()), i);
 		}
 
-		Arrays.sort(num);
+		Arrays.sort(num, new Comparator<Num>() {
+			@Override
+			public int compare(Num o1, Num o2) {
+				return o1.value - o2.value;
+			}
+		});
 
-		num = Arrays.stream(num).distinct().toArray();
+		int cnt = 0;
+		num[0].compress = cnt;
 
-		for (int i = 0; i < num.length; i++) {
-			for (int j = 0; j < n; j++) {
-				if (num[i] == xArr[j]) {
-					xArr[j] = i;
-				}
+		for (int i = 1; i < n; i++) {
+			if (num[i].value != num[i - 1].value) {
+				num[i].compress = ++cnt;
+			} else {
+				num[i].compress = cnt;
 			}
 		}
 
+		Arrays.sort(num, new Comparator<Num>() {
+			@Override
+			public int compare(Num o1, Num o2) {
+				return o1.index - o2.index;
+			}
+		});
+
 		for (int i = 0; i < n; i++) {
-			sb.append(xArr[i]).append(" ");
+			sb.append(num[i].compress).append(" ");
 		}
 
-		bw.write(sb.toString());
-		bw.flush();
+		System.out.println(sb.toString());
+
 		br.close();
-		bw.close();
 	}
 }

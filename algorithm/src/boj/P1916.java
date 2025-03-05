@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
-public class P1753 {
-	static ArrayList<Node>[] graph;
+public class P1916 {
+	static List<Node>[] graph;
 	static int[] dist;
 
 	static class Node implements Comparable<Node> {
@@ -53,24 +54,19 @@ public class P1753 {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
 
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		int n = Integer.parseInt(br.readLine());
+		int m = Integer.parseInt(br.readLine());
 
-		int vcnt = Integer.parseInt(st.nextToken());
-		int e = Integer.parseInt(st.nextToken());
+		graph = new ArrayList[n + 1];
+		dist = new int[n + 1];
 
-		int k = Integer.parseInt(br.readLine());
-
-		graph = new ArrayList[vcnt + 1];
-		dist = new int[vcnt + 1];
-
-		for (int i = 0; i <= vcnt; i++) {
+		for (int i = 0; i <= n; i++) {
 			graph[i] = new ArrayList<>();
 		}
 
-		for (int i = 0; i < e; i++) {
-			st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < m; i++) {
+			StringTokenizer st = new StringTokenizer(br.readLine());
 
 			int u = Integer.parseInt(st.nextToken());
 			int v = Integer.parseInt(st.nextToken());
@@ -79,17 +75,14 @@ public class P1753 {
 			graph[u].add(new Node(v, w));
 		}
 
-		dijkstra(k);
+		StringTokenizer st = new StringTokenizer(br.readLine());
 
-		for (int i = 1; i <= vcnt; i++) {
-			if (dist[i] == Integer.MAX_VALUE) {
-				sb.append("INF").append("\n");
-			} else {
-				sb.append(dist[i]).append("\n");
-			}
-		}
+		int start = Integer.parseInt(st.nextToken());
+		int end = Integer.parseInt(st.nextToken());
 
-		System.out.println(sb.toString());
+		dijkstra(start);
+
+		System.out.println(dist[end]);
 
 		br.close();
 	}
