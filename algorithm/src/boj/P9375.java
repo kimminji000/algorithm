@@ -7,6 +7,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class P9375 {
+	static List<String> category;
+	static int[] count;
+	static boolean[] subset;
+	static int cnt;
+
+	static void powerset(int start, int n) {
+		if (start == n) {
+			for (int i = 0; i < n; i++) {
+				if (subset[i]) {
+				}
+			}
+			return;
+		}
+
+		for (int i = 0; i < n; i++) {
+			subset[i] = true;
+			powerset(i + 1, n);
+
+			subset[i] = false;
+			powerset(i + 1, n);
+
+		}
+
+	}
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -16,11 +40,11 @@ public class P9375 {
 		for (int i = 0; i < t; i++) {
 			int n = Integer.parseInt(br.readLine());
 
-			List<String> category = new ArrayList<>();
-			int[] count = new int[n];
+			category = new ArrayList<>();
+			count = new int[n];
 
 			for (int j = 0; j < n; j++) {
-				String name = br.readLine();
+				br.readLine(); // name
 				String cate = br.readLine();
 
 				if (category.contains(cate)) {
@@ -30,6 +54,10 @@ public class P9375 {
 					count[category.indexOf(cate)]++;
 				}
 			}
+
+			subset = new boolean[category.size()];
+
+			powerset(0, category.size());
 
 		}
 

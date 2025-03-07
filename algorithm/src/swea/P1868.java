@@ -7,32 +7,71 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class P1868 {
-	static int min;
 	static int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
 	static int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
-	static void bfs(char board[][], int n) {
+	static int check(char board[][], int n) {
+		int clickCnt = 0;
+
 		Queue<int[]> queue = new ArrayDeque<>();
 
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
-				int cnt = 0;
-				for (int k = 0; k < 8; k++) {
-					if (isPossible(i + dx[k], j + dy[k], n) && board[i + dx[k]][j + dy[k]] == '*') {
-						cnt++;
+				if (board[i][j] == '.' && countLandmine(i, j, board, n) == 0) {
+					clickCnt++;
+					board[i][j] = '0';
+					queue.offer(new int[] { i, j });
+					bfs(queue, board, n);
+				}
+			}
+		}
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (board[i][j] == '.') {
+					clickCnt++;
+				}
+			}
+		}
+
+		return clickCnt;
+	}
+
+	static int countLandmine(int x, int y, char[][] board, int n) {
+		int cnt = 0;
+
+		for (int k = 0; k < 8; k++) {
+			if (isPossible(x + dx[k], y + dy[k], n) && board[x + dx[k]][y + dy[k]] == '*') {
+				cnt++;
+			}
+		}
+
+		return cnt;
+	}
+
+	static void bfs(Queue<int[]> queue, char[][] board, int n) {
+		while (!queue.isEmpty()) {
+			int[] now = queue.poll();
+			int x = now[0];
+			int y = now[1];
+
+			for (int m = 0; m < 8; m++) {
+				int nowX = x + dx[m];
+				int nowY = y + dy[m];
+
+				if (isPossible(nowX, nowY, n) && board[nowX][nowY] == '.') {
+					board[nowX][nowY] = (char) ('0' + countLandmine(nowX, nowY, board, n));
+
+					if (board[nowX][nowY] == '0') {
+						queue.offer(new int[] { nowX, nowY });
 					}
 				}
-
-				board[i][j] = (char) ('0' + cnt);
 			}
 		}
 	}
 
 	static boolean isPossible(int x, int y, int n) {
-		if (x >= 0 && x < n && y >= 0 && y < n) {
-			return true;
-		}
-		return false;
+		return x >= 0 && x < n && y >= 0 && y < n;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -54,17 +93,9 @@ public class P1868 {
 				}
 			}
 
-			min = Integer.MAX_VALUE;
+			int clickCnt = check(board, n);
 
-			for (int i = 0; i < n; i++) {
-				for (int j = 0; j < n; j++) {
-					if (board[i][j] != '*') {
-						bfs(board, n);
-					}
-				}
-			}
-
-			sb.append("#").append(tc).append(" ").append(false).append("\n");
+			sb.append("#").append(tc).append(" ").append(clickCnt).append("\n");
 		}
 
 		System.out.println(sb.toString());
