@@ -110,7 +110,7 @@ class Solution {
 	public static void main(String[] args) throws Exception {
 		int TC, MARK;
 
-		System.setIn(new java.io.FileInputStream("C:/Users/SSAFY/git/algorithm/algorithm/bin/swea/p17/sample_input.txt"));
+		System.setIn(new java.io.FileInputStream("C:/Users/SSAFY/git/algorithm/algorithm/src/swea/p17/sample_input.txt"));
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
