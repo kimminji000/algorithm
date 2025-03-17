@@ -6,6 +6,19 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class P6064 {
+	static int gcd(int a, int b) {
+		while (b != 0) {
+			int tmp = a % b;
+			a = b;
+			b = tmp;
+		}
+		return a;
+	}
+
+	static int lcm(int a, int b) {
+		return a * b / gcd(a, b);
+	}
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -19,33 +32,6 @@ public class P6064 {
 			int x = Integer.parseInt(st.nextToken());
 			int y = Integer.parseInt(st.nextToken());
 
-			int cnt = 0;
-			int num = x;
-			boolean flag = false;
-
-			while (x != m && y != n) {
-				if (num == y) {
-					flag = true;
-					break;
-				}
-
-				num += m;
-				cnt++;
-
-				while (num > n) {
-					num -= n;
-				}
-			}
-
-			if (num == y) {
-				flag = true;
-			}
-
-			if (flag) {
-				System.out.println(m * cnt + x);
-			} else {
-				System.out.println(-1);
-			}
 		}
 	}
 }
