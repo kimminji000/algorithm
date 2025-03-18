@@ -20,14 +20,15 @@ public class P7662 {
 		@Override
 		public int compareTo(Number o) {
 			if (this.num == o.num) {
-				return this.index - o.index;
+				return Integer.compare(this.index, o.index);
 			}
-			return this.num - o.num;
+			return Integer.compare(this.num, o.num);
 		}
 	}
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 
 		int t = Integer.parseInt(br.readLine());
 
@@ -57,10 +58,12 @@ public class P7662 {
 			}
 
 			if (treeSet.isEmpty()) {
-				System.out.println("EMPTY");
+				sb.append("EMPTY\n");
 			} else {
-				System.out.println(treeSet.last().num + " " + treeSet.first().num);
+				sb.append(treeSet.last().num).append(" ").append(treeSet.first().num).append("\n");
 			}
 		}
+
+		System.out.println(sb.toString());
 	}
 }
