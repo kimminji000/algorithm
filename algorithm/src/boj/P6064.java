@@ -32,6 +32,10 @@ public class P6064 {
 			int x = Integer.parseInt(st.nextToken());
 			int y = Integer.parseInt(st.nextToken());
 
+			int lcm = lcm(m, n);
+			
+			
+
 		}
 	}
 }
