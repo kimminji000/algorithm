@@ -33,8 +33,7 @@ public class P6064 {
 			int y = Integer.parseInt(st.nextToken());
 
 			int lcm = lcm(m, n);
-			
-			
+						
 
 		}
 	}
