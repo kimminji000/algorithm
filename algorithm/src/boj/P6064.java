@@ -8,9 +8,9 @@ import java.util.StringTokenizer;
 public class P6064 {
 	static int gcd(int a, int b) {
 		while (b != 0) {
-			int tmp = a % b;
+			int temp = a % b;
 			a = b;
-			b = tmp;
+			b = temp;
 		}
 		return a;
 	}
@@ -33,8 +33,23 @@ public class P6064 {
 			int y = Integer.parseInt(st.nextToken());
 
 			int lcm = lcm(m, n);
-						
+			int num;
+			int cnt = -1;
 
+			for (int year = x; year <= lcm; year += m) {
+				if (year % n == 0) {
+					num = n;
+				} else {
+					num = year % n;
+				}
+
+				if (num == y) {
+					cnt = year;
+					break;
+				}
+			}
+
+			System.out.println(cnt);
 		}
 	}
 }
