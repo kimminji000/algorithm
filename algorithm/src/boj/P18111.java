@@ -16,6 +16,7 @@ public class P18111 {
 		int b = Integer.parseInt(st.nextToken());
 
 		int[][] ground = new int[n][m];
+		int high = 256, low = 0;
 
 		for (int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
@@ -25,5 +26,35 @@ public class P18111 {
 			}
 		}
 
+		int minTime = Integer.MAX_VALUE, height = 0;
+
+		for (int i = high; i >= low; i--) {
+			int time = 0, block = b;
+
+			for (int x = 0; x < n; x++) {
+				for (int y = 0; y < m; y++) {
+					if (ground[x][y] > i) {
+						int diff = ground[x][y] - i;
+
+						block += diff;
+						time += 2 * diff;
+					}
+
+					if (ground[x][y] < i) {
+						int diff = i - ground[x][y];
+
+						block -= diff;
+						time += 1 * diff;
+					}
+				}
+			}
+
+			if (block >= 0 && time < minTime) {
+				minTime = time;
+				height = i;
+			}
+		}
+
+		System.out.println(minTime + " " + height);
 	}
 }

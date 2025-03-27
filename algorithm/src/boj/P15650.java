@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class P15652 {
+public class P15650 {
 	static List<int[]> combs;
 	static int[] comb;
 
@@ -19,7 +19,7 @@ public class P15652 {
 
 		for (int i = start; i < n; i++) {
 			comb[depth] = i + 1;
-			combination(i, depth + 1, n, r);
+			combination(i + 1, depth + 1, n, r);
 		}
 	}
 
