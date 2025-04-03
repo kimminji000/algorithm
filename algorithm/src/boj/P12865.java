@@ -29,8 +29,6 @@ public class P12865 {
 		
 		for (int i = 1; i < n; i++) {
 			
-			dp[i][0] = ;
-					dp[i][1] = ;
 		}
 	}
 }

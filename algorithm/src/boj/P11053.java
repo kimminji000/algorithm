@@ -12,29 +12,28 @@ public class P11053 {
 		int n = Integer.parseInt(br.readLine());
 
 		int[] num = new int[n];
+		int[] dp = new int[n];
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
 		for (int i = 0; i < n; i++) {
 			num[i] = Integer.parseInt(st.nextToken());
+			dp[i] = 1;
 		}
 
-		int maxCnt = 0;
-
-		for (int i = 0; i < n; i++) {
-			int cnt = 0;
-			int maxNum = 0;
-
-			for (int j = i; j < n; j++) {
-				if (maxNum < num[j]) {
-					cnt++;
-					maxNum = num[j];
+		for (int i = 1; i < n; i++) {
+			for (int j = 0; j < i; j++) {
+				if (num[i] > num[j]) {
+					dp[i] = Math.max(dp[i], dp[j] + 1);
 				}
 			}
-
-			maxCnt = Math.max(cnt, maxCnt);
 		}
 
-		System.out.println(maxCnt);
+		int max = 0;
+		for (int i = 0; i < n; i++) {
+			max = Math.max(max, dp[i]);
+		}
+
+		System.out.println(max);
 	}
 }
