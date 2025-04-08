@@ -45,7 +45,7 @@ public class P3055 {
 						continue;
 					}
 
-					if (map[nextX][nextY] == '.' && visited[nextX][nextY] == 0) {
+					if (map[nextX][nextY] == '.') {
 						map[nextX][nextY] = 'S';
 						visited[nextX][nextY] = visited[nowX][nowY] + 1;
 						queue.offer(new int[] { nextX, nextY });

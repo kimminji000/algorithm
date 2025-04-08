@@ -13,17 +13,17 @@ public class P1753 {
 	static int[] dist;
 
 	static class Node implements Comparable<Node> {
-		int index;
-		int cost;
+		int vertex;
+		int weight;
 
 		public Node(int index, int cost) {
-			this.index = index;
-			this.cost = cost;
+			this.vertex = index;
+			this.weight = cost;
 		}
 
 		@Override
 		public int compareTo(Node o) {
-			return this.cost - o.cost;
+			return this.weight - o.weight;
 		}
 	}
 
@@ -38,14 +38,14 @@ public class P1753 {
 		while (!pq.isEmpty()) {
 			Node now = pq.poll();
 
-			if (now.cost > dist[now.index]) {
+			if (now.weight > dist[now.vertex]) {
 				continue;
 			}
 
-			for (Node next : graph[now.index]) {
-				if (dist[now.index] + next.cost < dist[next.index]) {
-					dist[next.index] = dist[now.index] + next.cost;
-					pq.add(new Node(next.index, dist[next.index]));
+			for (Node next : graph[now.vertex]) {
+				if (dist[next.vertex] > dist[now.vertex] + next.weight) {
+					dist[next.vertex] = dist[now.vertex] + next.weight;
+					pq.add(new Node(next.vertex, dist[next.vertex]));
 				}
 			}
 		}
