@@ -9,13 +9,12 @@ import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class P14567 {
-	private static int[] topologicalSort(int v, List<List<Integer>> subjects) {
+public class P2252 {
+	static List<Integer> topologicalSort(int v, List<List<Integer>> graph) {
 		int[] inDegree = new int[v + 1];
-		int[] term = new int[v + 1];
 
 		for (int i = 1; i <= v; i++) {
-			for (int j : subjects.get(i)) {
+			for (int j : graph.get(i)) {
 				inDegree[j]++;
 			}
 		}
@@ -25,24 +24,24 @@ public class P14567 {
 		for (int i = 1; i <= v; i++) {
 			if (inDegree[i] == 0) {
 				queue.offer(i);
-				term[i] = 1;
 			}
 		}
 
+		List<Integer> result = new ArrayList<>();
+
 		while (!queue.isEmpty()) {
 			int now = queue.poll();
+			result.add(now);
 
-			for (int i : subjects.get(now)) {
+			for (int i : graph.get(now)) {
 				inDegree[i]--;
-
 				if (inDegree[i] == 0) {
 					queue.offer(i);
-					term[i] = term[now] + 1;
 				}
 			}
 		}
 
-		return term;
+		return result;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -54,10 +53,9 @@ public class P14567 {
 		int n = Integer.parseInt(st.nextToken());
 		int m = Integer.parseInt(st.nextToken());
 
-		List<List<Integer>> subjects = new ArrayList<>();
-
+		List<List<Integer>> graph = new ArrayList<>();
 		for (int i = 0; i <= n; i++) {
-			subjects.add(new ArrayList<>());
+			graph.add(new ArrayList<>());
 		}
 
 		for (int i = 0; i < m; i++) {
@@ -66,13 +64,13 @@ public class P14567 {
 			int a = Integer.parseInt(st.nextToken());
 			int b = Integer.parseInt(st.nextToken());
 
-			subjects.get(a).add(b);
+			graph.get(a).add(b);
 		}
 
-		int[] term = topologicalSort(n, subjects);
+		List<Integer> result = topologicalSort(n, graph);
 
-		for (int i = 1; i <= n; i++) {
-			sb.append(term[i]).append(" ");
+		for (int i : result) {
+			sb.append(i).append(" ");
 		}
 
 		System.out.println(sb.toString());
