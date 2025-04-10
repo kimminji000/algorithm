@@ -5,12 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class P3665 {
-	private static void topologicalSort(int n, List<List<Integer>> graph) {
+	static List<Integer> result;
+
+	private static String topologicalSort(int n, List<Set<Integer>> graph) {
 		int[] inDegree = new int[n + 1];
 
 		for (int i = 1; i <= n; i++) {
@@ -25,26 +29,44 @@ public class P3665 {
 				queue.offer(i);
 			}
 		}
-		
-		while(!queue.isEmpty()) {
+
+		result = new ArrayList<>();
+		while (!queue.isEmpty()) {
+			if (queue.size() > 1) {
+				return "?";
+			}
+
 			int now = queue.poll();
-			
-			
+			result.add(now);
+
+			for (int j : graph.get(now)) {
+				inDegree[j]--;
+
+				if (inDegree[j] == 0) {
+					queue.offer(j);
+				}
+			}
 		}
 
+		if (result.size() == n) {
+			return "OK";
+		} else {
+			return "IMPOSSIBLE";
+		}
 	}
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 
 		int t = Integer.parseInt(br.readLine());
 
 		for (int tc = 0; tc < t; tc++) {
 			int n = Integer.parseInt(br.readLine());
 
-			List<List<Integer>> graph = new ArrayList<>();
+			List<Set<Integer>> graph = new ArrayList<>();
 			for (int i = 0; i <= n; i++) {
-				graph.add(new ArrayList<>());
+				graph.add(new HashSet<>());
 			}
 
 			StringTokenizer st = new StringTokenizer(br.readLine());
@@ -68,11 +90,33 @@ public class P3665 {
 				int a = Integer.parseInt(st.nextToken());
 				int b = Integer.parseInt(st.nextToken());
 
-				graph.get(b).remove(Integer.valueOf(a));
-				graph.get(a).add(b);
+				if (graph.get(a).contains(b)) {
+					graph.get(a).remove(b);
+					graph.get(b).add(a);
+				} else {
+					graph.get(b).remove(a);
+					graph.get(a).add(b);
+				}
 			}
 
-			topologicalSort(n, graph);
+			String flag = topologicalSort(n, graph);
+
+			switch (flag) {
+			case "OK":
+				for (int i : result) {
+					sb.append(i).append(" ");
+				}
+				break;
+			case "?":
+				sb.append("?");
+				break;
+			case "IMPOSSIBLE":
+				sb.append("IMPOSSIBLE");
+				break;
+			}
+			sb.append("\n");
 		}
+
+		System.out.println(sb.toString());
 	}
 }

@@ -6,6 +6,22 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class P12865 {
+	public static int knapsack(int k, int[] weight, int[] value, int n) {
+		int[][] dp = new int[n + 1][k + 1];
+
+		for (int i = 1; i <= n; i++) {
+			for (int w = 1; w <= k; w++) {
+				if (weight[i] <= w) {
+					dp[i][w] = Math.max(dp[i - 1][w], dp[i - 1][w - weight[i]] + value[i]);
+				} else {
+					dp[i][w] = dp[i - 1][w];
+				}
+			}
+		}
+
+		return dp[n][k];
+	}
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
@@ -14,21 +30,18 @@ public class P12865 {
 		int n = Integer.parseInt(st.nextToken());
 		int k = Integer.parseInt(st.nextToken());
 
-		int[][] bag = new int[n][2];
-		int[][] dp = new int[n][2];
+		int[] weight = new int[n + 1];
+		int[] value = new int[n + 1];
 
-		for (int i = 0; i < n; i++) {
+		for (int i = 1; i <= n; i++) {
 			st = new StringTokenizer(br.readLine());
-			
-			bag[i][0] = Integer.parseInt(st.nextToken());
-			bag[i][1] = Integer.parseInt(st.nextToken());
+
+			weight[i] = Integer.parseInt(st.nextToken());
+			value[i] = Integer.parseInt(st.nextToken());
 		}
-		
-		dp[0][0] = 0;
-		dp[0][1] = bag[0][1];
-		
-		for (int i = 1; i < n; i++) {
-			
-		}
+
+		int maxValue = knapsack(k, weight, value, n);
+
+		System.out.println(maxValue);
 	}
 }
