@@ -7,19 +7,29 @@ import java.util.StringTokenizer;
 
 public class P7579 {
 	private static int knapsack(int n, int m, int[] memory, int[] cost) {
-		int[][] dp = new int[n + 1][m + 1];
+		int costSum = 0;
+		for (int i = 1; i <= n; i++) {
+			costSum += cost[i];
+		}
+
+		int[][] dp = new int[n + 1][costSum + 1];
+		int minCost = Integer.MAX_VALUE;
 
 		for (int i = 1; i <= n; i++) {
-			for (int j = 1; j <= m; j++) {
-				if (memory[i] <= j) {
-					dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - memory[i]] + cost[i]);
+			for (int j = 0; j <= costSum; j++) {
+				if (cost[i] <= j) {
+					dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - cost[i]] + memory[i]);
 				} else {
 					dp[i][j] = dp[i - 1][j];
+				}
+
+				if (dp[i][j] >= m && j < minCost) {
+					minCost = j;
 				}
 			}
 		}
 
-		return dp[n][m];
+		return minCost;
 	}
 
 	public static void main(String[] args) throws IOException {
