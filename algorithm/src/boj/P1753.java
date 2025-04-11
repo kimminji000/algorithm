@@ -5,11 +5,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class P1753 {
-	static ArrayList<Node>[] graph;
+	static List<Node>[] graph;
 	static int[] dist;
 
 	static class Node implements Comparable<Node> {
@@ -90,7 +91,5 @@ public class P1753 {
 		}
 
 		System.out.println(sb.toString());
-
-		br.close();
 	}
 }

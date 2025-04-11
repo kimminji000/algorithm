@@ -3,17 +3,17 @@ package boj;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class P17471 {
-	static List<ArrayList<Integer>> combs;
-	static ArrayList<Integer> comb;
+	static List<List<Integer>> combs;
+	static List<Integer> comb;
 	static boolean[] visited;
-	static ArrayList<Integer>[] graph;
+	static List<Integer>[] graph;
 	static int[] population;
 
 	static void combination(int start, int depth, int n, int r) {
@@ -30,7 +30,7 @@ public class P17471 {
 	}
 
 	static int bfs(List<Integer> list, int sum) {
-		Queue<Integer> queue = new LinkedList<>();
+		Queue<Integer> queue = new ArrayDeque<>();
 
 		queue.offer(list.get(0));
 		visited[list.get(0)] = true;
@@ -76,8 +76,8 @@ public class P17471 {
 			}
 		}
 
-		combs = new ArrayList<ArrayList<Integer>>();
-		comb = new ArrayList<Integer>();
+		combs = new ArrayList<>();
+		comb = new ArrayList<>();
 
 		for (int i = 1; i < n; i++) {
 			combination(1, 0, n, i);

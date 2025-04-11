@@ -1,21 +1,20 @@
 package boj;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class P1260 {
 	static boolean[] visited;
-	static ArrayList<Integer>[] graph;
-	static ArrayList<Integer> sequenceDfs;
-	static ArrayList<Integer> sequenceBfs;
+	static List<Integer>[] graph;
+	static List<Integer> sequenceDfs;
+	static List<Integer> sequenceBfs;
 
 	public static void dfs(int r) {
 		if (visited[r]) {
@@ -31,8 +30,8 @@ public class P1260 {
 	}
 
 	public static void bfs(int r) {
-		Queue<Integer> queue = new LinkedList<Integer>();
-		queue.add(r);
+		Queue<Integer> queue = new ArrayDeque<>();
+		queue.offer(r);
 		visited[r] = true;
 
 		while (!queue.isEmpty()) {
@@ -42,7 +41,7 @@ public class P1260 {
 			for (int x : graph[now]) {
 				if (!visited[x]) {
 					visited[x] = true;
-					queue.add(x);
+					queue.offer(x);
 				}
 			}
 		}
@@ -50,7 +49,6 @@ public class P1260 {
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		StringBuilder sb = new StringBuilder();
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -98,9 +96,6 @@ public class P1260 {
 			sb.append(sequenceBfs.get(i)).append(" ");
 		}
 
-		bw.write(sb.toString());
-		bw.flush();
-		br.close();
-		bw.close();
+		System.out.println(sb.toString());
 	}
 }
