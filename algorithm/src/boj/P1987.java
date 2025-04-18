@@ -6,24 +6,49 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class P1987 {
+	static char[][] board;
+	static boolean[] alpha;
+	static int r, c, maxCnt;
 	static int[] dx = { -1, 1, 0, 0 };
-	static int[] dy = { 0, 0, -1, 0 };
+	static int[] dy = { 0, 0, -1, 1 };
+
+	private static void dfs(int x, int y, int cnt) {
+		alpha[board[x][y] - 'A'] = true;
+		maxCnt = Math.max(cnt, maxCnt);
+
+		for (int i = 0; i < 4; i++) {
+			int nx = x + dx[i];
+			int ny = y + dy[i];
+
+			if ((nx >= 0 && nx < r && ny >= 0 && ny < c) && !alpha[board[nx][ny] - 'A']) {
+				dfs(nx, ny, cnt + 1);
+			}
+		}
+
+		alpha[board[x][y] - 'A'] = false;
+	}
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
-		int r = Integer.parseInt(st.nextToken());
-		int c = Integer.parseInt(st.nextToken());
+		r = Integer.parseInt(st.nextToken());
+		c = Integer.parseInt(st.nextToken());
 
-		char[][] board = new char[r][c];
+		board = new char[r][c];
+		alpha = new boolean[26];
 
 		for (int i = 0; i < r; i++) {
-			String st = new 
-			for (int j = 0; j < c; j++) {
+			String str = br.readLine();
 
+			for (int j = 0; j < c; j++) {
+				board[i][j] = str.charAt(j);
 			}
 		}
+
+		dfs(0, 0, 1);
+
+		System.out.println(maxCnt);
 	}
 }
