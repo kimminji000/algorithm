@@ -6,17 +6,17 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class P1629 {
-	static long muti(int a, int b, int c) {
+	private static long pow(int a, int b, int c) {
 		if (b == 1) {
 			return a % c;
 		}
-		if (b == 2) {
-			return a * a % c;
+
+		long temp = pow(a, b / 2, c);
+
+		if (b % 2 == 1) {
+			return (temp * temp % c) * a % c;
 		}
-		if (b == 3) {
-			return a * a * a % c;
-		}
-		return muti(a, b / 2, c) * muti(a, b - b / 2, c) % c;
+		return temp * temp % c;
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -28,6 +28,6 @@ public class P1629 {
 		int b = Integer.parseInt(st.nextToken());
 		int c = Integer.parseInt(st.nextToken());
 
-		System.out.println(muti(a, b, c));
+		System.out.println(pow(a, b, c));
 	}
 }
