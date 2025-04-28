@@ -8,31 +8,40 @@ import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class P12851 {
-	private static boolean[] visited;
-
-	private static class Node {
-		int pos;
-		int time;
-
-		public Node(int pos, int time) {
-			super();
-			this.pos = pos;
-			this.time = time;
-		}
-	}
+	private static int[] time;
+	private static int minTime;
+	private static int cnt;
 
 	private static void bfs(int n, int k) {
-		Queue<Node> queue = new ArrayDeque<>();
-		queue.offer(new Node(n, 0));
+		Queue<Integer> queue = new ArrayDeque<>();
+		queue.offer(n);
+		time[n] = 1;
 
 		while (!queue.isEmpty()) {
-			Node now = queue.poll();
+			int now = queue.poll();
 
-			if (visited[now.pos - 1]) {
-				queue.offer(new Node(now.pos - 1, now.time + 1));
+			if (now == k) {
+				if (minTime > time[now]) {
+					minTime = time[now];
+					cnt = 1;
+				} else if (minTime == time[now]) {
+					cnt++;
+				}
 			}
-			queue.offer(new Node(now.pos + 1, now.time + 1));
-			queue.offer(new Node(now.pos * 2, now.time + 1));
+
+			if (minTime < time[now]) {
+				return;
+			}
+
+			int[] nextPos = { now - 1, now + 1, now * 2 };
+			for (int next : nextPos) {
+				if (next >= 0 && next <= 100000) {
+					if (time[next] == 0 || time[next] == time[now] + 1) {
+						queue.offer(next);
+						time[next] = time[now] + 1;
+					}
+				}
+			}
 		}
 	}
 
@@ -44,8 +53,13 @@ public class P12851 {
 		int n = Integer.parseInt(st.nextToken());
 		int k = Integer.parseInt(st.nextToken());
 
-		visited = new boolean[100001];
+		time = new int[100001];
+		minTime = Integer.MAX_VALUE;
+		cnt = 0;
 
 		bfs(n, k);
+
+		System.out.println(minTime - 1);
+		System.out.println(cnt);
 	}
 }
