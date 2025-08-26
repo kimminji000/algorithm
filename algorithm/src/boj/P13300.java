@@ -1,63 +1,37 @@
 package boj;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
 public class P13300 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-
 		StringTokenizer st = new StringTokenizer(br.readLine());
 
 		int n = Integer.parseInt(st.nextToken());
 		int k = Integer.parseInt(st.nextToken());
 
-		int[] mNum = new int[7], wNum = new int[7];
+		int[][] cnt = new int[2][7];
 
 		for (int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
 
-			if (Integer.parseInt(st.nextToken()) == 0) {
-				wNum[Integer.parseInt(st.nextToken())]++;
-			} else {
-				mNum[Integer.parseInt(st.nextToken())]++;
+			int s = Integer.parseInt(st.nextToken());
+			int grade = Integer.parseInt(st.nextToken());
+
+			cnt[s][grade]++;
+		}
+
+		int rooms = 0;
+
+		for (int s = 0; s < 2; s++) {
+			for (int grade = 1; grade <= 6; grade++) {
+				rooms += cnt[s][grade] % k == 0 ? cnt[s][grade] / k : cnt[s][grade] / k + 1;
 			}
 		}
 
-		int cnt = 0;
-
-		for (int i = 1; i <= 6; i++) {
-			if (wNum[i] == 0) {
-				continue;
-			} else if (wNum[i] % k == 0) {
-				cnt += wNum[i] / k;
-
-			} else {
-				cnt += wNum[i] / k + 1;
-			}
-
-		}
-
-		for (int i = 1; i <= 6; i++) {
-			if (mNum[i] == 0) {
-				continue;
-			} else if (mNum[i] % k == 0) {
-				cnt += mNum[i] / k;
-
-			} else {
-				cnt += mNum[i] / k + 1;
-			}
-
-		}
-
-		bw.write(Integer.toString(cnt));
-
-		bw.flush();
-		bw.close();
+		System.out.println(rooms);
 	}
 }
