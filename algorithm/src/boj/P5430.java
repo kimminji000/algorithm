@@ -10,64 +10,59 @@ import java.util.StringTokenizer;
 public class P5430 {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
+		StringBuilder sb;
 
 		int t = Integer.parseInt(br.readLine());
 
 		for (int tc = 0; tc < t; tc++) {
 			String p = br.readLine();
+
 			int n = Integer.parseInt(br.readLine());
+
 			String str = br.readLine();
 			StringTokenizer st = new StringTokenizer(str.substring(1, str.length() - 1), ",");
 
-			Deque<Integer> num = new ArrayDeque<>();
+			Deque<Integer> deque = new ArrayDeque<Integer>();
 			for (int i = 0; i < n; i++) {
-				num.offer(Integer.parseInt(st.nextToken()));
+				deque.offer(Integer.parseInt(st.nextToken()));
 			}
 
-			boolean flag = true;
 			boolean reverse = false;
+			boolean flag = true;
 
 			for (int i = 0; i < p.length(); i++) {
-				switch (p.charAt(i)) {
-				case 'R':
+				if (p.charAt(i) == 'R') {
 					reverse = !reverse;
-					break;
-
-				case 'D':
-					if (num.size() == 0) {
+				} else {
+					if (deque.isEmpty()) {
 						flag = false;
 						break;
 					}
 
-					if (!reverse) {
-						num.pollFirst();
+					if (reverse) {
+						deque.pollLast();
 					} else {
-						num.pollLast();
+						deque.pollFirst();
 					}
-					break;
 				}
 			}
 
 			if (flag) {
-				if (num.isEmpty()) {
-					sb.append("[]").append("\n");
-				} else {
-					sb.append("[");
+				sb = new StringBuilder();
 
-					while (!num.isEmpty()) {
-						sb.append(reverse ? num.pollLast() : num.pollFirst()).append(",");
-					}
-
-					sb.deleteCharAt(sb.length() - 1);
-
-					sb.append("]").append("\n");
+				sb.append("[");
+				while (!deque.isEmpty()) {
+					sb.append(reverse ? deque.pollLast() : deque.pollFirst()).append(",");
 				}
+				if (sb.length() != 1) {
+					sb.deleteCharAt(sb.length() - 1);
+				}
+				sb.append("]");
+
+				System.out.println(sb.toString());
 			} else {
-				sb.append("error").append("\n");
+				System.out.println("error");
 			}
 		}
-
-		System.out.println(sb.toString());
 	}
 }
