@@ -5,54 +5,40 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.StringTokenizer;
 
 public class P1874_2 {
-	private static class Tower {
-		int index;
-		int height;
-
-		public Tower(int index, int height) {
-			super();
-			this.index = index;
-			this.height = height;
-		}
-	}
-
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
 
 		int n = Integer.parseInt(br.readLine());
 
-		Tower[] towers = new Tower[n + 1];
-		int[] receivers = new int[n + 1];
+		Deque<Integer> stack = new ArrayDeque<>();
+		int index = 1;
 
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		boolean flag = true;
 
-		for (int i = 1; i <= n; i++) {
-			towers[i] = new Tower(i, Integer.parseInt(st.nextToken()));
-		}
+		for (int i = 0; i < n; i++) {
+			int k = Integer.parseInt(br.readLine());
 
-		Deque<Tower> stack = new ArrayDeque<>();
-		stack.push(towers[n]);
+			while (index <= k) {
+				stack.push(index++);
+				sb.append("+").append("\n");
+			}
 
-		for (int i = n - 1; i > 0; i--) {
-			if (towers[i].height < stack.peek().height) {
-				stack.push(towers[i]);
+			if (!stack.isEmpty() && stack.peek() == k) {
+				stack.pop();
+				sb.append("-").append("\n");
 			} else {
-				while (towers[i].height < stack.peek().height) {
-					int tower = stack.pop();
-					receivers[tower] = i;
-				}
-				stack.push(towers[i]);
+				flag = false;
+				break;
 			}
 		}
 
-		for (int i = 1; i <= n; i++) {
-			sb.append(receivers[i]).append(" ");
+		if (flag) {
+			System.out.println(sb.toString());
+		} else {
+			System.out.println("NO");
 		}
-
-		System.out.println(sb.toString());
 	}
 }
